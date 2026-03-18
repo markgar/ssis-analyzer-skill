@@ -1,42 +1,32 @@
-# SSIS Analyzer Skill
+# ssis-analyzer-skill
 
-An [Agent Skill](https://agentskills.io) that analyzes SQL Server Integration Services (SSIS) `.dtsx` package files. It extracts and presents control flow, data flows, connections, variables, parameters, SQL statements, script code, column lineage, execution order, and migration assessment information.
+A plugin repository for [GitHub Copilot](https://github.com/features/copilot) that provides SSIS package analysis capabilities.
+
+## Plugins
+
+| Plugin | Description |
+|--------|-------------|
+| [ssis-analyzer](plugins/ssis-analyzer/) | Analyze SSIS `.dtsx` packages — extract control flow, data flows, connections, variables, SQL, scripts, column lineage, and migration assessment. |
 
 ## Installation
 
-### Copilot CLI / Claude Code
-
-Register this repo as a plugin marketplace:
-
-```
-/plugin marketplace add <owner>/ssis-analyzer-skill
+```bash
+copilot plugin marketplace add markgar/ssis-analyzer-skill
+copilot plugin install ssis-analyzer@ssis-analyzer-skill
 ```
 
-Then install the plugin:
+## Repository Structure
 
 ```
-/plugin install ssis-analyzer@ssis-analyzer-marketplace
+├── plugins/
+│   └── ssis-analyzer/       # The plugin
+│       ├── .github/plugin/  # Plugin manifest
+│       ├── skills/          # Skills bundled with the plugin
+│       ├── scripts/         # Python analysis scripts
+│       └── README.md        # Plugin documentation
+├── tests/                   # Test suite
+└── pyproject.toml           # Python project config
 ```
-
-### Manual
-
-Copy the `plugins/ssis-analyzer/` directory into your agent's skills location.
-
-## What It Does
-
-Given a `.dtsx` file, this skill enables an agent to:
-
-- **Document** a package: metadata, connections, tasks, data flows, variables, parameters
-- **Trace** column lineage through data flow pipelines
-- **Extract** all SQL statements and C#/VB script code
-- **Analyze** execution order with parallel branch detection
-- **Search** across all named objects in a package
-- **Assess** migration readiness for Azure Data Factory / Fabric
-
-## Requirements
-
-- Python 3.10+
-- No external dependencies (pure Python standard library)
 
 ## Development
 
@@ -44,9 +34,6 @@ Given a `.dtsx` file, this skill enables an agent to:
 # Run tests
 pip install pytest
 pytest tests/ -q
-
-# Run a command manually
-python plugins/ssis-analyzer/scripts/analyze.py <path-to.dtsx> overview
 ```
 
 ## License
