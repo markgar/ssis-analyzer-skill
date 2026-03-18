@@ -2,7 +2,7 @@
   "name": "ssis-migration",
   "metadata": {
     "description": "SQL Server migration analysis plugins — SSIS package analysis and DACPAC/BACPAC schema extraction",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "pluginRoot": "./plugins"
   },
   "owner": {
@@ -13,13 +13,13 @@
       "name": "ssis-analyzer",
       "source": "ssis-analyzer",
       "description": "Analyze SSIS .dtsx packages — extract control flow, data flows, connections, variables, SQL, scripts, column lineage, and migration assessment.",
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     {
       "name": "dacpac-analyzer",
       "source": "dacpac-analyzer",
       "description": "Analyze SQL Server .dacpac and .bacpac packages — extract tables, views, stored procedures, functions, constraints, indexes, schemas, and full database schema metadata.",
-      "version": "0.1.0"
+      "version": "0.1.1"
     }
   ]
 }
