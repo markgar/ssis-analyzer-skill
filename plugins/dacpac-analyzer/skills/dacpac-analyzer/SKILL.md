@@ -19,8 +19,34 @@ The analyzer extracts these files, parses the XML, and presents structured schem
 
 ## Usage
 
+**IMPORTANT — Resolving the script path**: The script is located at `../../scripts/analyze.py` relative to this `SKILL.md` file. Do NOT assume it exists in the user's working directory.
+
+The plugin folder structure is:
+
 ```
-python scripts/analyze.py <path-to-dacpac-or-bacpac> <command> [args...]
+dacpac-analyzer/          ← plugin root
+├── scripts/
+│   ├── analyze.py        ← THIS IS THE CLI ENTRY POINT
+│   ├── constants.py
+│   ├── errors.py
+│   ├── extraction/
+│   ├── models/
+│   ├── orchestration/
+│   └── parsing/
+│       └── extractors/
+└── skills/
+    └── dacpac-analyzer/
+        └── SKILL.md      ← YOU ARE HERE
+```
+
+To resolve the absolute path to `analyze.py`:
+1. Take the absolute path of this SKILL.md (e.g. from `/skills info`), go two directories up, then into `scripts/analyze.py`.
+2. As a fallback, use: `find ~/.copilot -path "*/dacpac-analyzer/scripts/analyze.py" 2>/dev/null | head -1`
+
+Once you have the absolute path, run commands as:
+
+```bash
+python /absolute/path/to/analyze.py <path-to-dacpac-or-bacpac> <command> [args...]
 ```
 
 ## Commands

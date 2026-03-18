@@ -26,7 +26,7 @@ copilot plugin install dacpac-analyzer@ssis-migration
 |-------|-------------|
 | `dacpac-analyzer` | Analyze `.dacpac` and `.bacpac` packages to document database schema, extract SQL scripts, search objects, and audit constraints and indexes. |
 
-### Available Commands
+### Commands (Slash Commands)
 
 | Command | Description |
 |---------|-------------|
@@ -49,6 +49,15 @@ copilot plugin install dacpac-analyzer@ssis-migration
 | `list-permissions` | All permission statements |
 | `extract-sql` | All SQL body scripts from views, procedures, functions |
 | `find` | Case-insensitive search across all named objects and columns |
+
+## Key Features
+
+- **Full schema extraction** — tables, views, stored procedures, functions, and all object types
+- **Constraint and index audit** — PKs, FKs, unique, check, default constraints, and indexes
+- **SQL script extraction** — pull body scripts from views, procedures, and functions
+- **Object search** — case-insensitive search across all named objects and columns
+- **Schema metadata** — schemas, sequences, table types, roles, and permissions
+- **DACPAC and BACPAC support** — works with both package formats
 
 ## Requirements
 

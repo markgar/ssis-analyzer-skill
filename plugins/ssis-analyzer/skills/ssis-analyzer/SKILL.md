@@ -10,78 +10,107 @@ Analyze SSIS `.dtsx` package files to understand their structure, document them,
 
 ## How to Use
 
-All analysis is done via the CLI script. The script path relative to this skill is `scripts/analyze.py`.
+All analysis is done via the CLI script `analyze.py`, which is installed alongside this skill.
 
-```bash
-python scripts/analyze.py <path-to-dtsx-file> <command> [args...]
+**IMPORTANT — Resolving the script path**: The script is located at `../../scripts/analyze.py` relative to this `SKILL.md` file. Do NOT assume it exists in the user's working directory.
+
+The plugin folder structure is:
+
+```
+ssis-analyzer/            ← plugin root
+├── scripts/
+│   ├── analyze.py        ← THIS IS THE CLI ENTRY POINT
+│   ├── loader.py
+│   ├── models.py
+│   ├── knowledge.py
+│   ├── ordering.py
+│   ├── cross_reference.py
+│   └── extractors/
+│       ├── connections.py
+│       ├── dataflow.py
+│       ├── executables.py
+│       └── ...
+└── skills/
+    └── ssis-analyzer/
+        └── SKILL.md      ← YOU ARE HERE
 ```
 
-**IMPORTANT**: Always use the full path to `analyze.py` based on where this skill is installed. The script uses only Python stdlib — no dependencies to install.
+To resolve the absolute path to `analyze.py`:
+1. Take the absolute path of this SKILL.md (e.g. from `/skills info`), go two directories up, then into `scripts/analyze.py`.
+2. As a fallback, use: `find ~/.copilot -path "*/ssis-analyzer/scripts/analyze.py" 2>/dev/null | head -1`
+
+Once you have the absolute path, run commands as:
+
+```bash
+python /absolute/path/to/analyze.py <path-to-dtsx-file> <command> [args...]
+```
+
+The script uses only Python stdlib — no dependencies to install.
 
 ## Available Commands
 
 ### Package Overview
 ```bash
-python scripts/analyze.py package.dtsx overview
+python "$ANALYZE" package.dtsx overview
 ```
 Returns package metadata, format version, deployment model, and summary counts.
 
 ### Execution Order
 ```bash
-python scripts/analyze.py package.dtsx execution-order
+python "$ANALYZE" package.dtsx execution-order
 ```
 Topologically sorted execution order with parallel branch detection.
 
 ### Connections
 ```bash
-python scripts/analyze.py package.dtsx list-connections
-python scripts/analyze.py package.dtsx connection-detail "MyConnection"
+python "$ANALYZE" package.dtsx list-connections
+python "$ANALYZE" package.dtsx connection-detail "MyConnection"
 ```
 List all connection managers or get full details (connection string, properties, expressions, flat-file schema).
 
 ### Control Flow (Tasks)
 ```bash
-python scripts/analyze.py package.dtsx list-tasks
-python scripts/analyze.py package.dtsx task-detail "Load Customers"
-python scripts/analyze.py package.dtsx list-constraints
+python "$ANALYZE" package.dtsx list-tasks
+python "$ANALYZE" package.dtsx task-detail "Load Customers"
+python "$ANALYZE" package.dtsx list-constraints
 ```
 Tree view of all tasks/containers, detailed task info (SQL, script code, loop config), and precedence constraints.
 
 ### Data Flow
 ```bash
-python scripts/analyze.py package.dtsx list-data-flows
-python scripts/analyze.py package.dtsx data-flow-detail "Load Data"
-python scripts/analyze.py package.dtsx component-detail "Load Data" "OLE DB Source"
-python scripts/analyze.py package.dtsx column-lineage "Load Data"
+python "$ANALYZE" package.dtsx list-data-flows
+python "$ANALYZE" package.dtsx data-flow-detail "Load Data"
+python "$ANALYZE" package.dtsx component-detail "Load Data" "OLE DB Source"
+python "$ANALYZE" package.dtsx column-lineage "Load Data"
 ```
 List data flows, inspect components and paths, get full column specifications, and trace column lineage.
 
 ### Variables & Parameters
 ```bash
-python scripts/analyze.py package.dtsx list-variables
-python scripts/analyze.py package.dtsx list-parameters
-python scripts/analyze.py package.dtsx variable-refs
-python scripts/analyze.py package.dtsx variable-refs "MyVariable"
+python "$ANALYZE" package.dtsx list-variables
+python "$ANALYZE" package.dtsx list-parameters
+python "$ANALYZE" package.dtsx variable-refs
+python "$ANALYZE" package.dtsx variable-refs "MyVariable"
 ```
 List all variables/parameters and cross-reference where they are set and consumed.
 
 ### SQL & Script Extraction
 ```bash
-python scripts/analyze.py package.dtsx extract-sql
-python scripts/analyze.py package.dtsx extract-scripts
+python "$ANALYZE" package.dtsx extract-sql
+python "$ANALYZE" package.dtsx extract-scripts
 ```
 Extract all SQL statements from Execute SQL Tasks and data flow components. Extract all C#/VB scripts from Script Tasks and Script Components.
 
 ### Search
 ```bash
-python scripts/analyze.py package.dtsx find "Customer"
+python "$ANALYZE" package.dtsx find "Customer"
 ```
 Case-insensitive search across tasks, connections, variables, parameters, and data flow components.
 
 ### Knowledge Base
 ```bash
-python scripts/analyze.py _ explain "OLE DB Source"
-python scripts/analyze.py _ list-known-components
+python "$ANALYZE" _ explain "OLE DB Source"
+python "$ANALYZE" _ list-known-components
 ```
 Look up what a component does, migration guidance, and risks. The first argument can be any value for these commands (the package is not loaded).
 

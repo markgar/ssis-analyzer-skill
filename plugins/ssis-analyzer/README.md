@@ -26,7 +26,7 @@ copilot plugin install ssis-analyzer@ssis-migration
 |-------|-------------|
 | `ssis-analyzer` | Analyze `.dtsx` packages to document structure, trace column lineage, extract SQL and scripts, analyze execution order, search named objects, and assess migration readiness for Azure Data Factory / Fabric. |
 
-### Available Commands
+### Commands (Slash Commands)
 
 | Command | Description |
 |---------|-------------|
@@ -49,6 +49,15 @@ copilot plugin install ssis-analyzer@ssis-migration
 | `find` | Case-insensitive search across all named objects |
 | `explain` | Look up what a component does and get migration guidance |
 | `list-known-components` | Reference list of all supported SSIS component types |
+
+## Key Features
+
+- **Control flow analysis** — extract task tree, precedence constraints, and execution order
+- **Data flow inspection** — trace column lineage through pipeline components
+- **SQL and script extraction** — pull all embedded SQL and C#/VB scripts
+- **Connection inventory** — catalog all connection managers and their targets
+- **Variable and parameter tracking** — cross-reference where variables are set and consumed
+- **Migration assessment** — component-level readiness guidance for Azure Data Factory / Fabric
 
 ## Requirements
 
