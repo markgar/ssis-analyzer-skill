@@ -1,13 +1,18 @@
 {
-  "name": "ssis-analyzer-marketplace",
+  "name": "ssis-migration",
   "owner": {
     "name": "Mark Garner"
   },
   "plugins": [
     {
       "name": "ssis-analyzer",
-      "source": "./",
+      "source": "./plugins/ssis-analyzer",
       "description": "Analyze SSIS .dtsx packages — extract control flow, data flows, connections, variables, SQL, scripts, column lineage, and migration assessment."
+    },
+    {
+      "name": "dacpac-analyzer",
+      "source": "./plugins/dacpac-analyzer",
+      "description": "Analyze SQL Server .dacpac and .bacpac packages — extract tables, views, stored procedures, functions, constraints, indexes, schemas, and full database schema metadata."
     }
   ]
 }
